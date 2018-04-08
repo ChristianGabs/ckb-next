@@ -198,11 +198,6 @@ typedef struct {
     int handle;
     // uinput handles
     int uinput_kb, uinput_mouse;
-    // Buffer used to store non-HID interrupt reads from the input thread.
-    uchar* interruptbuf;
-    // Mutex to share data between the input thread and os_usbrecv()
-    pthread_mutex_t interruptmutex;
-    pthread_cond_t interruptcond;
 #else
     // USB identifier
     uint32_t location_id[IFACE_MAX + 1];
@@ -269,6 +264,11 @@ typedef struct {
     uint delay;
     // Keymap that should be applied to this device
     key* keymap;
+    // Buffer used to store non-HID interrupt reads from the input thread.
+    uchar* interruptbuf;
+    // Mutex to share data between the input thread and os_usbrecv()
+    pthread_mutex_t interruptmutex;
+    pthread_cond_t interruptcond;
 } usbdevice;
 
 #endif  // STRUCTURES_H
